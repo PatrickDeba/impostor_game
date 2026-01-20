@@ -42,7 +42,7 @@
             </div>
 
             <div id="playersList" class="players"></div>
-            <p class="help" id="playersHelp">Mínimo 3. Sin duplicados.</p>
+            <p class="help" id="playersHelp">Mínimo 3. (${state.players.length})</p>
           </div>
 
           <div class="block">
@@ -54,23 +54,26 @@
           </div>
 
           <div class="block">
-            <div class="row row--space">
-              <div>
-                <label class="label">Pistas a impostores</label>
-                <p class="help">Si activas pistas, eliges nivel.</p>
+            <div class="hint-card">
+              <div class="hint-card__top">
+                <div>
+                  <label class="label">Pistas para impostores</label>
+                  <p class="help">Si activas pistas, eliges el nivel al inicio.</p>
+                </div>
+                <label class="switch">
+                  <input id="hintsToggle" type="checkbox" />
+                  <span class="switch__ui"></span>
+                </label>
               </div>
-              <label class="switch">
-                <input id="hintsToggle" type="checkbox" />
-                <span class="switch__ui"></span>
-              </label>
-            </div>
 
-            <div class="row">
-              <select id="hintLevel" class="input" disabled>
-                <option value="1">Nivel 1 (fácil)</option>
-                <option value="2">Nivel 2 (medio)</option>
-                <option value="3">Nivel 3 (difícil)</option>
-              </select>
+              <div class="hint-card__bottom">
+                <span class="muted">Nivel</span>
+                <select id="hintLevel" class="input" disabled>
+                  <option value="1">1 (fácil)</option>
+                  <option value="2">2 (medio)</option>
+                  <option value="3">3 (difícil)</option>
+                </select>
+              </div>
             </div>
           </div>
 
@@ -83,7 +86,7 @@
 
       <!-- DEAL / CARDS -->
       <section id="viewDeal" class="view hidden">
-        <div class="panel">
+        <div class="panel" id="dealPanel">
           <div class="deal-head">
             <div>
               <p class="muted">Turno de</p>
@@ -118,10 +121,12 @@
       <!-- START PLAYER -->
       <section id="viewStart" class="view hidden">
         <div class="panel">
-          <h1>Empieza</h1>
-          <div class="start-name" id="starterName">Nombre</div>
-          <p class="help center">Ya podéis organizar el orden entre vosotros.</p>
-          <button id="backToMenuBtn" class="btn btn--big" type="button">Volver al menú</button>
+          <div class="start-screen">
+            <p class="start-kicker">Empieza</p>
+            <div class="start-name" id="starterName">Nombre</div>
+            <p class="help center">Ya podéis organizar el orden entre vosotros.</p>
+            <button id="backToMenuBtn" class="btn btn--small" type="button">Volver al menú</button>
+          </div>
         </div>
       </section>
     </main>

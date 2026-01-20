@@ -44,6 +44,7 @@ const el = {
   roleTitle: document.getElementById("roleTitle"),
   roleHint: document.getElementById("roleHint"),
   nextBtn: document.getElementById("nextBtn"),
+  dealPanel: document.getElementById("dealPanel"),
 
   // start
   starterName: document.getElementById("starterName"),
@@ -84,7 +85,7 @@ function clampImpostors(){
   const max = Math.max(0, state.players.length - 1);
   state.impostorCount = Math.min(state.impostorCount, max);
   el.impostorCount.max = String(max);
-  el.impostorMaxHint.textContent = `Máximo: ${max}`;
+  el.impostorMaxHint.textContent = `Max: ${max}`;
   el.impostorCount.value = String(state.impostorCount);
 }
 
@@ -133,7 +134,7 @@ function renderPlayers(){
     seen.add(k);
   }
 
-  el.playersHelp.textContent = `Mínimo 3. Sin duplicados. (${state.players.length})`;
+  el.playersHelp.textContent = `Mínimo 3. (${state.players.length})`;
   el.playersHelp.style.color = (state.players.length < 3 || hasDup) ? "var(--danger)" : "var(--muted)";
 
   state.players.forEach((name, idx) => {
@@ -253,9 +254,9 @@ function updateDealUI(){
   // reset reveal state
   hideRole();
 
-  el.currentPlayerName.classList.remove("player-transition");
-  void el.currentPlayerName.offsetWidth;
-  el.currentPlayerName.classList.add("player-transition");
+  el.dealPanel.classList.remove("slide-transition");
+  void el.dealPanel.offsetWidth;
+  el.dealPanel.classList.add("slide-transition");
 }
 
 function showRole(){
@@ -405,9 +406,9 @@ el.nextBtn.addEventListener("click", () => {
 
   // extra subtle feedback
   if (!el.viewDeal.classList.contains("hidden")){
-    el.revealCard.classList.remove("player-transition");
-    void el.revealCard.offsetWidth;
-    el.revealCard.classList.add("player-transition");
+    el.dealPanel.classList.remove("slide-transition");
+    void el.dealPanel.offsetWidth;
+    el.dealPanel.classList.add("slide-transition");
   }
 });
 
