@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Impostor</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="app" class="app">
+    <!-- Mobile-only gate -->
+    <div id="desktopGate" class="desktop-gate" aria-hidden="true">
+      <div class="card">
+        <h2>Solo móvil</h2>
+        <p>Abre esto desde un iPhone/Android.</p>
+      </div>
+    </div>
+
+    <!-- HEADER -->
+    <header class="topbar">
+      <div class="topbar__left">
+        <span class="brand">Impostor</span>
+      </div>
+      <div class="topbar__right">
+        <button id="exitBtn" class="icon-btn hidden" type="button" aria-label="Salir al menú">✕</button>
+      </div>
+    </header>
+
+    <!-- VIEWS -->
+    <main class="main">
+      <!-- MENU -->
+      <section id="viewMenu" class="view">
+        <div class="panel">
+          <h1>Configurar partida</h1>
+
+          <div class="block">
+            <label class="label">Jugadores</label>
+
+            <div class="row">
+              <input id="playerNameInput" class="input" type="text" inputmode="text" placeholder="Nombre del jugador" maxlength="24" />
+              <button id="addPlayerBtn" class="btn btn--primary" type="button">Añadir</button>
+            </div>
+
+            <div id="playersList" class="players"></div>
+            <p class="help" id="playersHelp">Mínimo 3. Sin duplicados.</p>
+          </div>
+
+          <div class="block">
+            <label class="label">Impostores</label>
+            <div class="row">
+              <input id="impostorCount" class="input" type="number" inputmode="numeric" min="0" value="1" />
+              <span class="muted" id="impostorMaxHint"></span>
+            </div>
+          </div>
+
+          <div class="block">
+            <div class="row row--space">
+              <div>
+                <label class="label">Pistas a impostores</label>
+                <p class="help">Si activas pistas, eliges nivel.</p>
+              </div>
+              <label class="switch">
+                <input id="hintsToggle" type="checkbox" />
+                <span class="switch__ui"></span>
+              </label>
+            </div>
+
+            <div class="row">
+              <select id="hintLevel" class="input" disabled>
+                <option value="1">Nivel 1 (fácil)</option>
+                <option value="2">Nivel 2 (medio)</option>
+                <option value="3">Nivel 3 (difícil)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="block">
+            <button id="startBtn" class="btn btn--big btn--primary" type="button">Comenzar</button>
+            <p id="errorBox" class="error hidden"></p>
+          </div>
+        </div>
+      </section>
+
+      <!-- DEAL / CARDS -->
+      <section id="viewDeal" class="view hidden">
+        <div class="panel">
+          <div class="deal-head">
+            <div>
+              <p class="muted">Turno de</p>
+              <h2 id="currentPlayerName">Jugador</h2>
+            </div>
+            <div class="pill" id="progressPill">1/1</div>
+          </div>
+
+          <div class="reveal-area">
+            <div id="revealCard" class="reveal-card" role="button" aria-label="Desliza hacia arriba y mantén para ver el rol">
+              <div class="reveal-card__top">
+                <p class="muted">Desliza hacia arriba y mantén</p>
+                <h3>Ver rol</h3>
+              </div>
+
+              <div class="reveal-card__role" id="roleContent" aria-hidden="true">
+                <h3 id="roleTitle">Civil</h3>
+                <p id="roleHint" class="hint hidden"></p>
+              </div>
+
+              <div class="reveal-card__handle" aria-hidden="true"></div>
+            </div>
+
+            <p class="help center">Al soltar, se oculta automáticamente.</p>
+          </div>
+
+          <div class="block">
+            <button id="nextBtn" class="btn btn--big btn--primary" type="button">Siguiente jugador</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- START PLAYER -->
+      <section id="viewStart" class="view hidden">
+        <div class="panel">
+          <h1>Empieza</h1>
+          <div class="start-name" id="starterName">Nombre</div>
+          <p class="help center">Ya podéis organizar el orden entre vosotros.</p>
+          <button id="backToMenuBtn" class="btn btn--big" type="button">Volver al menú</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
