@@ -1,4 +1,4 @@
-const HINTS_EXTRA = [
+const HINTS = [
   { solution: "Cerveza", l1: "Bebida", l2: "Fría", l3: "Noche" },
   { solution: "Discoteca", l1: "Fiesta", l2: "Música alta", l3: "Noche" },
   { solution: "Hotel", l1: "Viaje", l2: "Cama", l3: "Habitación" },
