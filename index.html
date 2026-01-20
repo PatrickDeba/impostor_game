@@ -54,20 +54,20 @@
           </div>
 
           <div class="block">
-            <div class="hint-card">
-              <div class="hint-card__top">
-                <div>
-                  <label class="label">Pistas para impostores</label>
-                  <p class="help">Si activas pistas, eliges el nivel al inicio.</p>
+            <div class="hint-card hint-card--big">
+              <div class="hint-head">
+                <div class="hint-head__text">
+                  <div class="hint-title">Pistas para impostores</div>
+                  <div class="hint-sub">Si activas pistas, eliges el nivel al inicio.</div>
                 </div>
-                <label class="switch">
+                <label class="switch" aria-label="Activar pistas">
                   <input id="hintsToggle" type="checkbox" />
                   <span class="switch__ui"></span>
                 </label>
               </div>
 
-              <div class="hint-card__bottom">
-                <span class="muted">Nivel</span>
+              <div class="hint-level">
+                <div class="hint-level__label">Nivel</div>
                 <select id="hintLevel" class="input" disabled>
                   <option value="1">1 (fácil)</option>
                   <option value="2">2 (medio)</option>
@@ -87,12 +87,12 @@
       <!-- DEAL / CARDS -->
       <section id="viewDeal" class="view hidden">
         <div class="panel" id="dealPanel">
+          <div class="pill pill--corner" id="progressPill">1/1</div>
           <div class="deal-head">
             <div>
               <p class="muted">Turno de</p>
               <h2 id="currentPlayerName">Jugador</h2>
             </div>
-            <div class="pill" id="progressPill">1/1</div>
           </div>
 
           <div class="reveal-area">
@@ -121,11 +121,12 @@
       <!-- START PLAYER -->
       <section id="viewStart" class="view hidden">
         <div class="panel">
-          <div class="start-screen">
-            <p class="start-kicker">Empieza</p>
-            <div class="start-name" id="starterName">Nombre</div>
-            <p class="help center">Ya podéis organizar el orden entre vosotros.</p>
-            <button id="backToMenuBtn" class="btn btn--small" type="button">Volver al menú</button>
+          <div class="start-screen start-screen--final">
+            <div class="start-big">
+              <span class="start-big__kicker">Empieza:</span>
+              <span class="start-big__name" id="starterName">Nombre</span>
+            </div>
+            <button id="backToMenuBtn" class="btn btn--small start-back" type="button">Volver al menú</button>
           </div>
         </div>
       </section>
