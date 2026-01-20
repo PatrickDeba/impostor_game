@@ -48,6 +48,13 @@ const el = {
   // start
   starterName: document.getElementById("starterName"),
   backToMenuBtn: document.getElementById("backToMenuBtn"),
+
+  // modal
+  modal: document.getElementById("modal"),
+  modalText: document.getElementById("modalText"),
+  modalYes: document.getElementById("modalYes"),
+  modalNo: document.getElementById("modalNo"),
+  revealFront: document.getElementById("revealFront"),
 };
 
 /* =========================
@@ -82,7 +89,38 @@ function clampImpostors(){
 }
 
 /* =========================
-   Players list (render + reorder)
+   Confirm modal
+========================= */
+let confirmOnYes = null;
+
+function showConfirm(message, onYes){
+  confirmOnYes = typeof onYes === "function" ? onYes : null;
+  el.modalText.textContent = message;
+  el.modal.classList.remove("hidden");
+  el.modal.setAttribute("aria-hidden", "false");
+}
+
+function hideConfirm(){
+  el.modal.classList.add("hidden");
+  el.modal.setAttribute("aria-hidden", "true");
+  confirmOnYes = null;
+}
+
+el.modalNo.addEventListener("click", hideConfirm);
+
+el.modalYes.addEventListener("click", () => {
+  const fn = confirmOnYes;
+  hideConfirm();
+  if (fn) fn();
+});
+
+// Close if tap on backdrop
+el.modal.addEventListener("click", (e) => {
+  if (e.target === el.modal) hideConfirm();
+});
+
+/* =========================
+   Players list (render only)
 ========================= */
 function renderPlayers(){
   el.playersList.innerHTML = "";
@@ -106,17 +144,10 @@ function renderPlayers(){
     const left = document.createElement("div");
     left.className = "player-left";
 
-    const drag = document.createElement("div");
-    drag.className = "drag";
-    drag.textContent = "≡";
-    drag.setAttribute("role", "button");
-    drag.setAttribute("aria-label", "Reordenar");
-
     const nm = document.createElement("div");
     nm.className = "player-name";
     nm.textContent = name;
 
-    left.appendChild(drag);
     left.appendChild(nm);
 
     const actions = document.createElement("div");
@@ -128,87 +159,20 @@ function renderPlayers(){
     del.textContent = "🗑";
     del.setAttribute("aria-label", `Eliminar ${name}`);
     del.addEventListener("click", () => {
-      state.players.splice(idx, 1);
-      clampImpostors();
-      renderPlayers();
+      showConfirm(`¿Estás seguro de que quieres borrar el jugador ${name}?`, () => {
+        state.players.splice(idx, 1);
+        clampImpostors();
+        renderPlayers();
+      });
     });
 
     actions.appendChild(del);
     item.appendChild(left);
     item.appendChild(actions);
     el.playersList.appendChild(item);
-
-    setupDragHandle(drag, item);
   });
 
   clampImpostors();
-}
-
-// Simple touch reorder (mobile)
-let dragCtx = null;
-function setupDragHandle(handle, item){
-  handle.addEventListener("pointerdown", (e) => {
-    e.preventDefault();
-    const rect = item.getBoundingClientRect();
-    dragCtx = {
-      startY: e.clientY,
-      fromIndex: Number(item.dataset.index),
-      item,
-      rect,
-    };
-    item.style.opacity = "0.65";
-    item.setPointerCapture(e.pointerId);
-  });
-
-  handle.addEventListener("pointermove", (e) => {
-    if (!dragCtx) return;
-    e.preventDefault();
-
-    const y = e.clientY;
-    const dy = y - dragCtx.startY;
-
-    // move visual
-    dragCtx.item.style.transform = `translateY(${dy}px)`;
-
-    // swap logic: find hovered item center
-    const items = [...document.querySelectorAll(".player-item")];
-    const from = dragCtx.fromIndex;
-
-    let targetIndex = from;
-    for (const it of items){
-      if (it === dragCtx.item) continue;
-      const r = it.getBoundingClientRect();
-      const mid = r.top + r.height / 2;
-      if (y < mid && Number(it.dataset.index) < from) {
-        targetIndex = Number(it.dataset.index);
-        break;
-      }
-      if (y > mid && Number(it.dataset.index) > from) {
-        targetIndex = Number(it.dataset.index);
-      }
-    }
-
-    if (targetIndex !== from){
-      const moved = state.players.splice(from, 1)[0];
-      state.players.splice(targetIndex, 0, moved);
-      renderPlayers(); // re-render updates indices
-      dragCtx = null;  // end drag to keep it clean
-    }
-  });
-
-  handle.addEventListener("pointerup", () => {
-    if (!dragCtx) return;
-    dragCtx.item.style.opacity = "";
-    dragCtx.item.style.transform = "";
-    dragCtx = null;
-  });
-
-  handle.addEventListener("pointercancel", () => {
-    if (!dragCtx) return;
-    dragCtx.item.style.opacity = "";
-    dragCtx.item.style.transform = "";
-    dragCtx = null;
-  });
 }
 
 /* =========================
@@ -288,6 +252,10 @@ function updateDealUI(){
 
   // reset reveal state
   hideRole();
+
+  el.currentPlayerName.classList.remove("player-transition");
+  void el.currentPlayerName.offsetWidth;
+  el.currentPlayerName.classList.add("player-transition");
 }
 
 function showRole(){
@@ -322,7 +290,8 @@ const reveal = {
   active: false,
   startY: 0,
   currentY: 0,
-  threshold: 90, // px upwards to reveal
+  threshold: 160, // px upwards to reveal (more intentional)
+  maxLift: 220,
 };
 
 el.revealCard.addEventListener("pointerdown", (e) => {
@@ -341,11 +310,11 @@ el.revealCard.addEventListener("pointermove", (e) => {
   const dy = reveal.currentY - reveal.startY; // negative when moving up
   const up = Math.max(0, -dy);
 
-  // translate card slightly for feel
-  const t = Math.min(up, 140);
-  el.revealCard.style.transform = `translateY(${-t/8}px)`;
+  // translate front layer for feel
+  const lift = Math.min(up, reveal.maxLift);
+  el.revealFront.style.transform = `translateY(${-lift}px)`;
 
-  if (up >= reveal.threshold) {
+  if (lift >= reveal.threshold) {
     showRole();
   } else {
     hideRole();
@@ -354,7 +323,7 @@ el.revealCard.addEventListener("pointermove", (e) => {
 
 function endReveal(){
   reveal.active = false;
-  el.revealCard.style.transform = "";
+  el.revealFront.style.transform = "translateY(0)";
   hideRole();
 }
 
@@ -431,15 +400,22 @@ el.hintLevel.addEventListener("change", () => {
 el.startBtn.addEventListener("click", startDeal);
 
 el.nextBtn.addEventListener("click", () => {
-  // role is always hidden after release; still enforce:
   hideRole();
   nextStep();
+
+  // extra subtle feedback
+  if (!el.viewDeal.classList.contains("hidden")){
+    el.revealCard.classList.remove("player-transition");
+    void el.revealCard.offsetWidth;
+    el.revealCard.classList.add("player-transition");
+  }
 });
 
 el.exitBtn.addEventListener("click", () => {
-  // exit to menu
-  setView("menu");
-  clearError();
+  showConfirm("¿Estás seguro de que quieres salir del juego?", () => {
+    setView("menu");
+    clearError();
+  });
 });
 
 el.backToMenuBtn.addEventListener("click", () => {

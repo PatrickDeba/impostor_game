@@ -94,17 +94,16 @@
 
           <div class="reveal-area">
             <div id="revealCard" class="reveal-card" role="button" aria-label="Desliza hacia arriba y mantén para ver el rol">
-              <div class="reveal-card__top">
-                <p class="muted">Desliza hacia arriba y mantén</p>
-                <h3>Ver rol</h3>
-              </div>
-
-              <div class="reveal-card__role" id="roleContent" aria-hidden="true">
+              <div class="reveal-back" id="roleContent" aria-hidden="true">
                 <h3 id="roleTitle">Civil</h3>
                 <p id="roleHint" class="hint hidden"></p>
               </div>
 
-              <div class="reveal-card__handle" aria-hidden="true"></div>
+              <div class="reveal-front" id="revealFront" aria-hidden="false">
+                <p class="muted">Desliza hacia arriba y mantén</p>
+                <h3>Ver rol</h3>
+                <div class="reveal-front__handle" aria-hidden="true"></div>
+              </div>
             </div>
 
             <p class="help center">Al soltar, se oculta automáticamente.</p>
@@ -126,6 +125,16 @@
         </div>
       </section>
     </main>
+  </div>
+
+  <div id="modal" class="modal hidden" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal-box">
+      <p id="modalText" class="modal-text"></p>
+      <div class="modal-actions">
+        <button id="modalNo" class="btn" type="button">No</button>
+        <button id="modalYes" class="btn btn--primary" type="button">Sí</button>
+      </div>
+    </div>
   </div>
 
   <script src="app.js"></script>
