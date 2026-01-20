@@ -228,12 +228,12 @@ function startDeal(){
   pickImpostors();
 
   // hints: placeholder (JSON al final)
-  state.selectedHint = state.hintsEnabled ? {
-    solution: "Tarta de queso",
-    l1: "Postre",
-    l2: "Dulce con queso",
-    l3: "Comida"
-  } : null;
+if (state.hintsEnabled) {
+  const random = HINTS[Math.floor(Math.random() * HINTS.length)];
+  state.selectedHint = random;
+} else {
+  state.selectedHint = null;
+}
 
   state.dealIndex = 0;
   updateDealUI();
