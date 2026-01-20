@@ -1,62 +1,67 @@
-const HINTS = [
-  {
-    solution: "Tarta de queso",
-    l1: "Postre",
-    l2: "Dulce con queso",
-    l3: "Comida"
-  },
-  {
-    solution: "Baloncesto",
-    l1: "Deporte",
-    l2: "Se juega con balón",
-    l3: "Equipo"
-  },
-  {
-    solution: "Netflix",
-    l1: "Plataforma",
-    l2: "Series y películas",
-    l3: "Pantalla"
-  },
-  {
-    solution: "Aeropuerto",
-    l1: "Viaje",
-    l2: "Aviones",
-    l3: "Lugar grande"
-  },
-  {
-    solution: "Gimnasio",
-    l1: "Entrenamiento",
-    l2: "Pesas",
-    l3: "Actividad"
-  },
-  {
-    solution: "Playa",
-    l1: "Verano",
-    l2: "Arena y agua",
-    l3: "Lugar"
-  },
-  {
-    solution: "Instagram",
-    l1: "Red social",
-    l2: "Fotos y vídeos",
-    l3: "App"
-  },
-  {
-    solution: "Pizza",
-    l1: "Comida",
-    l2: "Horno",
-    l3: "Cena"
-  },
-  {
-    solution: "Universidad",
-    l1: "Estudios",
-    l2: "Clases",
-    l3: "Centro"
-  },
-  {
-    solution: "Coche",
-    l1: "Transporte",
-    l2: "Ruedas",
-    l3: "Vehículo"
-  }
+const HINTS_EXTRA = [
+  { solution: "Cerveza", l1: "Bebida", l2: "Fría", l3: "Noche" },
+  { solution: "Discoteca", l1: "Fiesta", l2: "Música alta", l3: "Noche" },
+  { solution: "Hotel", l1: "Viaje", l2: "Cama", l3: "Habitación" },
+  { solution: "Whatsapp", l1: "Mensajes", l2: "Chats", l3: "Móvil" },
+  { solution: "Sofá", l1: "Casa", l2: "Descanso", l3: "Salón" },
+  { solution: "Ducha", l1: "Agua", l2: "Baño", l3: "Caliente" },
+  { solution: "Cama", l1: "Dormir", l2: "Noche", l3: "Descanso" },
+  { solution: "Besos", l1: "Cariño", l2: "Labios", l3: "Contacto" },
+  { solution: "Copas", l1: "Alcohol", l2: "Noche", l3: "Bar" },
+  { solution: "Resaca", l1: "Mañana", l2: "Dolor de cabeza", l3: "Después" },
+
+  { solution: "Piscina", l1: "Agua", l2: "Verano", l3: "Chapuzón" },
+  { solution: "Fiesta sorpresa", l1: "Evento", l2: "Secreto", l3: "Amigos" },
+  { solution: "Selfie", l1: "Foto", l2: "Móvil", l3: "Cara" },
+  { solution: "Cine", l1: "Pantalla", l2: "Película", l3: "Butaca" },
+  { solution: "Manta", l1: "Frío", l2: "Sofá", l3: "Taparse" },
+  { solution: "Palomitas", l1: "Comida", l2: "Cine", l3: "Snack" },
+  { solution: "Spotify", l1: "Música", l2: "Auriculares", l3: "App" },
+  { solution: "TikTok", l1: "Vídeos", l2: "Scroll", l3: "Red social" },
+  { solution: "Helado", l1: "Frío", l2: "Dulce", l3: "Verano" },
+  { solution: "Barbacoa", l1: "Comida", l2: "Carne", l3: "Amigos" },
+
+  { solution: "Miradas", l1: "Gestos", l2: "Silencio", l3: "Tensión" },
+  { solution: "Cita", l1: "Dos personas", l2: "Nervios", l3: "Encuentro" },
+  { solution: "After", l1: "Noche", l2: "Tarde", l3: "Continuar" },
+  { solution: "Mensaje borracho", l1: "Móvil", l2: "Noche", l3: "Error" },
+  { solution: "Ex", l1: "Pasado", l2: "Recuerdos", l3: "Peligro" },
+  { solution: "Tontear", l1: "Juego", l2: "Indirectas", l3: "Risas" },
+  { solution: "Baile pegado", l1: "Música", l2: "Cerca", l3: "Discoteca" },
+  { solution: "Calor", l1: "Sensación", l2: "Verano", l3: "Sube" },
+  { solution: "Mirador", l1: "Lugar", l2: "Vistas", l3: "Romántico" },
+  { solution: "Sudadera", l1: "Ropa", l2: "Grande", l3: "Prestada" },
+
+  { solution: "Vacaciones", l1: "Tiempo libre", l2: "Viaje", l3: "Descanso" },
+  { solution: "Chiringuito", l1: "Playa", l2: "Bebidas", l3: "Verano" },
+  { solution: "Risa tonta", l1: "Momento", l2: "Sin motivo", l3: "Nervios" },
+  { solution: "Indirecta", l1: "Mensaje", l2: "No directo", l3: "Intención" },
+  { solution: "Noche loca", l1: "Fiesta", l2: "Improvisar", l3: "Recuerdos" },
+  { solution: "Abrazo", l1: "Contacto", l2: "Cercanía", l3: "Calor" },
+  { solution: "Mirada incómoda", l1: "Silencio", l2: "Tensión", l3: "Momento" },
+  { solution: "Confesión", l1: "Verdad", l2: "Valor", l3: "Momento" },
+  { solution: "Story", l1: "Instagram", l2: "24 horas", l3: "Subir" },
+  { solution: "Like", l1: "Red social", l2: "Corazón", l3: "Interacción" },
+
+  { solution: "Casa vacía", l1: "Silencio", l2: "Oportunidad", l3: "Momento" },
+  { solution: "Nervios", l1: "Sensación", l2: "Barriga", l3: "Antes" },
+  { solution: "Guiño", l1: "Ojo", l2: "Señal", l3: "Mensaje" },
+  { solution: "Fiesta universitaria", l1: "Jóvenes", l2: "Alcohol", l3: "Noche" },
+  { solution: "Mirarse demasiado", l1: "Ojos", l2: "Tiempo", l3: "Algo pasa" },
+  { solution: "Playlist nocturna", l1: "Música", l2: "Mood", l3: "Noche" },
+  { solution: "Mensaje a las 3 AM", l1: "Hora rara", l2: "Tentación", l3: "Peligro" },
+  { solution: "Foto provocadora", l1: "Imagen", l2: "Intención", l3: "Reacción" },
+  { solution: "Reto", l1: "Juego", l2: "Valor", l3: "Grupo" },
+  { solution: "Verdad o reto", l1: "Juego", l2: "Confesiones", l3: "Risas" },
+
+  { solution: "Mirada cómplice", l1: "Secreto", l2: "Dos personas", l3: "Conexión" },
+  { solution: "Noche de verano", l1: "Calor", l2: "Larga", l3: "Magia" },
+  { solution: "Química", l1: "Sensación", l2: "Difícil de explicar", l3: "Entre dos" },
+  { solution: "Tensión", l1: "Ambiente", l2: "Silencio", l3: "Se nota" },
+  { solution: "Mensaje eliminado", l1: "Chat", l2: "Arrepentimiento", l3: "Tarde" },
+  { solution: "Foto guardada", l1: "Galería", l2: "Secreto", l3: "Privado" },
+  { solution: "Plan improvisado", l1: "Última hora", l2: "Noche", l3: "Sin pensar" },
+  { solution: "Mirar el móvil sonriendo", l1: "Mensaje", l2: "Persona", l3: "Interés" },
+  { solution: "Cerveza de más", l1: "Alcohol", l2: "Valentía", l3: "Consecuencias" },
+  { solution: "Silencio incómodo", l1: "Momento", l2: "Tensión", l3: "Ambiente" }
 ];
