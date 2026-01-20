@@ -227,13 +227,8 @@ function startDeal(){
 
   pickImpostors();
 
-  // hints: placeholder (JSON al final)
-if (state.hintsEnabled) {
-  const random = HINTS[Math.floor(Math.random() * HINTS.length)];
-  state.selectedHint = random;
-} else {
-  state.selectedHint = null;
-}
+  // Choose the secret word (always), and optionally reveal a hint to impostors
+  state.selectedHint = HINTS[Math.floor(Math.random() * HINTS.length)];
 
   state.dealIndex = 0;
   updateDealUI();
@@ -265,10 +260,18 @@ function showRole(){
 
   el.roleTitle.textContent = isImpostor ? "Impostor" : "Civil";
 
-  if (isImpostor && state.hintsEnabled && state.selectedHint){
+  // Civils see the word; impostors see the hint (if enabled)
+  if (!state.selectedHint) {
+    // Safety fallback
+    el.roleHint.textContent = "";
+    el.roleHint.classList.add("hidden");
+  } else if (!isImpostor) {
+    el.roleHint.textContent = `La palabra es: ${state.selectedHint.solution}`;
+    el.roleHint.classList.remove("hidden");
+  } else if (state.hintsEnabled) {
     const level = state.hintLevel;
     const hint = level === 1 ? state.selectedHint.l1 : level === 2 ? state.selectedHint.l2 : state.selectedHint.l3;
-    el.roleHint.textContent = hint;
+    el.roleHint.textContent = `Tu pista es: ${hint}`;
     el.roleHint.classList.remove("hidden");
   } else {
     el.roleHint.textContent = "";
