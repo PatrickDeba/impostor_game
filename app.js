@@ -49,6 +49,7 @@ const el = {
   // start
   starterName: document.getElementById("starterName"),
   backToMenuBtn: document.getElementById("backToMenuBtn"),
+  reviewCardsBtn: document.getElementById("reviewCardsBtn"),
 
   // modal
   modal: document.getElementById("modal"),
@@ -226,6 +227,7 @@ function startDeal(){
   if (err) { showError(err); return; }
 
   pickImpostors();
+  clearError();
 
   // Choose the secret word (always), and optionally reveal a hint to impostors
   state.selectedHint = HINTS[Math.floor(Math.random() * HINTS.length)];
@@ -360,6 +362,19 @@ function nextStep(){
   setView("start");
 }
 
+function reviewCards(){
+  // Re-open the same deal (same impostors + same word/pistas)
+  if (!state.selectedHint || !state.impostorSet || state.players.length < 3) {
+    showError("No hay una partida anterior para revisar.");
+    setView("menu");
+    return;
+  }
+
+  state.dealIndex = 0;
+  updateDealUI();
+  setView("deal");
+}
+
 /* =========================
    Events
 ========================= */
@@ -417,14 +432,25 @@ el.nextBtn.addEventListener("click", () => {
 
 el.exitBtn.addEventListener("click", () => {
   showConfirm("¿Estás seguro de que quieres salir del juego?", () => {
+    state.selectedHint = null;
+    state.impostorSet = new Set();
+    state.dealIndex = 0;
     setView("menu");
     clearError();
   });
 });
 
 el.backToMenuBtn.addEventListener("click", () => {
+  state.selectedHint = null;
+  state.impostorSet = new Set();
+  state.dealIndex = 0;
   setView("menu");
   clearError();
+});
+
+el.reviewCardsBtn.addEventListener("click", () => {
+  clearError();
+  reviewCards();
 });
 
 /* =========================
