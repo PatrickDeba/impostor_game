@@ -214,6 +214,17 @@ textarea{
   color: var(--muted);
 }
 
+/* Impostores: input + Max alineados y sin saltos raros */
+#impostorMaxHint{
+  white-space: nowrap;
+  font-weight: 800;
+}
+
+/* Cuando el input está desactivado (auto impostores), que parezca intencional */
+#impostorCount:disabled{
+  opacity: .55;
+}
+
 /* Deal */
 .reveal-area{ margin-top: 10px; }
 .reveal-card{

@@ -1,11 +1,13 @@
 <!doctype html>
 <html lang="es">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Impostor</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
+
 <body>
   <div id="app" class="app">
     <!-- Mobile-only gate -->
@@ -37,7 +39,8 @@
             <label class="label">Jugadores</label>
 
             <div class="row">
-              <input id="playerNameInput" class="input" type="text" inputmode="text" placeholder="Nombre del jugador" maxlength="24" />
+              <input id="playerNameInput" class="input" type="text" inputmode="text" placeholder="Nombre del jugador"
+                maxlength="24" />
               <button id="addPlayerBtn" class="btn btn--primary" type="button">Añadir</button>
             </div>
 
@@ -46,10 +49,25 @@
           </div>
 
           <div class="block">
-            <label class="label">Impostores</label>
-            <div class="row">
-              <input id="impostorCount" class="input" type="number" inputmode="numeric" min="0" value="1" />
-              <span class="muted" id="impostorMaxHint"></span>
+            <div class="hint-card hint-card--big">
+              <div class="hint-head">
+                <div class="hint-head__text">
+                  <div class="hint-title">Impostores</div>
+                  <div class="hint-sub">Activa “Automáticos” para que se elijan al azar al comenzar.</div>
+                </div>
+                <label class="switch" aria-label="Impostores automáticos">
+                  <input id="autoImpostorsToggle" type="checkbox" />
+                  <span class="switch__ui"></span>
+                </label>
+              </div>
+
+              <div class="hint-level">
+                <div class="hint-level__label">Cantidad</div>
+                <div class="row">
+                  <input id="impostorCount" class="input" type="number" inputmode="numeric" min="0" value="1" />
+                  <span class="muted" id="impostorMaxHint"></span>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -96,7 +114,8 @@
           </div>
 
           <div class="reveal-area">
-            <div id="revealCard" class="reveal-card" role="button" aria-label="Desliza hacia arriba y mantén para ver el rol">
+            <div id="revealCard" class="reveal-card" role="button"
+              aria-label="Desliza hacia arriba y mantén para ver el rol">
               <div class="reveal-back" id="roleContent" aria-hidden="true">
                 <h3 id="roleTitle">Civil</h3>
                 <p id="roleHint" class="hint hidden"></p>
@@ -126,7 +145,13 @@
               <span class="start-big__kicker">Empieza:</span>
               <span class="start-big__name" id="starterName">Nombre</span>
             </div>
+
             <button id="reviewCardsBtn" class="btn btn--primary btn--small" type="button">Revisar tarjetas</button>
+
+            <button id="showImpostorsBtn" class="btn btn--ghost btn--small hidden" type="button">Mostrar Nº de
+              Impostores</button>
+            <div id="impostorsInfo" class="muted start-impostors hidden">Impostores: 0</div>
+
             <button id="backToMenuBtn" class="btn btn--small start-back" type="button">Volver al menú</button>
           </div>
         </div>
@@ -144,7 +169,8 @@
     </div>
   </div>
 
-<script src="hints.js"></script>
-<script src="app.js"></script>
+  <script src="hints.js"></script>
+  <script src="app.js"></script>
 </body>
+
 </html>

@@ -4,6 +4,7 @@
 const state = {
   players: ["Jugador 1", "Jugador 2", "Jugador 3"],
   impostorCount: 1,
+  autoImpostors: false,
   hintsEnabled: false,
   hintLevel: 1, // 1..3
   // runtime
@@ -30,6 +31,7 @@ const el = {
   playersList: document.getElementById("playersList"),
   playersHelp: document.getElementById("playersHelp"),
   impostorCount: document.getElementById("impostorCount"),
+  autoImpostorsToggle: document.getElementById("autoImpostorsToggle"),
   impostorMaxHint: document.getElementById("impostorMaxHint"),
   hintsToggle: document.getElementById("hintsToggle"),
   hintLevel: document.getElementById("hintLevel"),
@@ -50,6 +52,8 @@ const el = {
   starterName: document.getElementById("starterName"),
   backToMenuBtn: document.getElementById("backToMenuBtn"),
   reviewCardsBtn: document.getElementById("reviewCardsBtn"),
+  showImpostorsBtn: document.getElementById("showImpostorsBtn"),
+  impostorsInfo: document.getElementById("impostorsInfo"),
 
   // modal
   modal: document.getElementById("modal"),
@@ -88,6 +92,9 @@ function clampImpostors(){
   el.impostorCount.max = String(max);
   el.impostorMaxHint.textContent = `Max: ${max}`;
   el.impostorCount.value = String(state.impostorCount);
+
+  // Disable manual input when auto is enabled
+  el.impostorCount.disabled = !!state.autoImpostors;
 }
 
 /* =========================
@@ -195,7 +202,7 @@ function validateConfig(){
   }
 
   const maxImp = n - 1;
-  if (state.impostorCount < 0 || state.impostorCount > maxImp) {
+  if (!state.autoImpostors && (state.impostorCount < 0 || state.impostorCount > maxImp)) {
     return `Impostores debe estar entre 0 y ${maxImp}.`;
   }
 
@@ -226,11 +233,21 @@ function startDeal(){
   const err = validateConfig();
   if (err) { showError(err); return; }
 
+  // Auto-pick number of impostors (0..N-1)
+  if (state.autoImpostors) {
+    const n = state.players.length;
+    const max = Math.max(0, n - 1);
+    state.impostorCount = Math.floor(Math.random() * (max + 1));
+    // reflect in UI
+    clampImpostors();
+  }
+
   pickImpostors();
   clearError();
 
   // Choose the secret word (always), and optionally reveal a hint to impostors
   state.selectedHint = HINTS[Math.floor(Math.random() * HINTS.length)];
+  console.log("[Impostor] impostores:", state.impostorCount, "de", state.players.length);
 
   state.dealIndex = 0;
   updateDealUI();
@@ -359,6 +376,7 @@ function nextStep(){
   // last player -> show starter
   const starter = state.players[Math.floor(Math.random() * n)];
   el.starterName.textContent = starter;
+  updateStartInfo();
   setView("start");
 }
 
@@ -373,6 +391,22 @@ function reviewCards(){
   state.dealIndex = 0;
   updateDealUI();
   setView("deal");
+}
+
+/* =========================
+   Update start info
+========================= */
+function updateStartInfo(){
+  if (!el.impostorsInfo || !el.showImpostorsBtn) return;
+
+  if (state.autoImpostors) {
+    el.impostorsInfo.textContent = `Impostores: ${state.impostorCount}`;
+    el.impostorsInfo.classList.add("hidden");
+    el.showImpostorsBtn.classList.remove("hidden");
+  } else {
+    el.impostorsInfo.classList.add("hidden");
+    el.showImpostorsBtn.classList.add("hidden");
+  }
 }
 
 /* =========================
@@ -402,9 +436,16 @@ el.playerNameInput.addEventListener("keydown", (e) => {
 });
 
 el.impostorCount.addEventListener("input", () => {
+  if (state.autoImpostors) return;
   const v = Number(el.impostorCount.value);
   state.impostorCount = Number.isFinite(v) ? v : 0;
   clampImpostors();
+});
+
+el.autoImpostorsToggle.addEventListener("change", () => {
+  state.autoImpostors = el.autoImpostorsToggle.checked;
+  clampImpostors();
+  saveConfig();
 });
 
 el.hintsToggle.addEventListener("change", () => {
@@ -435,6 +476,8 @@ el.exitBtn.addEventListener("click", () => {
     state.selectedHint = null;
     state.impostorSet = new Set();
     state.dealIndex = 0;
+    if (el.impostorsInfo) el.impostorsInfo.classList.add("hidden");
+    if (el.showImpostorsBtn) el.showImpostorsBtn.classList.add("hidden");
     setView("menu");
     clearError();
   });
@@ -444,6 +487,8 @@ el.backToMenuBtn.addEventListener("click", () => {
   state.selectedHint = null;
   state.impostorSet = new Set();
   state.dealIndex = 0;
+  if (el.impostorsInfo) el.impostorsInfo.classList.add("hidden");
+  if (el.showImpostorsBtn) el.showImpostorsBtn.classList.add("hidden");
   setView("menu");
   clearError();
 });
@@ -453,16 +498,53 @@ el.reviewCardsBtn.addEventListener("click", () => {
   reviewCards();
 });
 
+el.showImpostorsBtn.addEventListener("click", () => {
+  el.impostorsInfo.classList.toggle("hidden");
+});
+
+/* =========================
+   Config persistence
+========================= */
+function saveConfig(){
+  const data = {
+    players: state.players,
+    impostorCount: state.impostorCount,
+    autoImpostors: state.autoImpostors,
+    hintsEnabled: state.hintsEnabled,
+    hintLevel: state.hintLevel,
+  };
+  localStorage.setItem("impostorConfig", JSON.stringify(data));
+}
+
+function loadConfig(){
+  const raw = localStorage.getItem("impostorConfig");
+  if (!raw) return;
+  try {
+    const data = JSON.parse(raw);
+    if (Array.isArray(data.players)) state.players = data.players;
+    if (typeof data.impostorCount === "number") state.impostorCount = data.impostorCount;
+    if (typeof data.hintsEnabled === "boolean") state.hintsEnabled = data.hintsEnabled;
+    if (typeof data.autoImpostors === "boolean") {
+      state.autoImpostors = data.autoImpostors;
+    }
+    if (typeof data.hintLevel === "number") state.hintLevel = data.hintLevel;
+  } catch {
+    // ignore
+  }
+}
+
 /* =========================
    Init
 ========================= */
 function init(){
+  loadConfig();
   setView("menu");
   el.hintsToggle.checked = state.hintsEnabled;
   el.hintLevel.disabled = !state.hintsEnabled;
   el.hintLevel.value = String(state.hintLevel);
   el.impostorCount.value = String(state.impostorCount);
-  renderPlayers();
+  el.autoImpostorsToggle.checked = !!state.autoImpostors;
   clampImpostors();
+  renderPlayers();
 }
 init();
