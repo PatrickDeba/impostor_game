@@ -155,5 +155,54 @@ const HINTS = [
     { solution: "Cena", l1: "Comida", l2: "Noche", l3: "Mesa" },
     { solution: "Mensaje", l1: "Comunicación", l2: "Móvil", l3: "Texto" },
     { solution: "Plan", l1: "Idea", l2: "Personas", l3: "Organizar" },
-    { solution: "Fin de semana", l1: "Tiempo libre", l2: "Descanso", l3: "Esperado" }
+    { solution: "Fin de semana", l1: "Tiempo libre", l2: "Descanso", l3: "Esperado" },
+    { solution: "Spoiler", l1: "Información", l2: "Película", l3: "Arruina" },
+    { solution: "Drama", l1: "Exageración", l2: "Reacción", l3: "De más" },
+    { solution: "Pringado", l1: "Persona", l2: "Mala suerte", l3: "Siempre cae" },
+    { solution: "PS5", l1: "Para Jugar", l2: "Mando", l3: "Tele" },
+    { solution: "Cartera", l1: "Objeto", l2: "Dinero", l3: "Bolsillo" },
+    { solution: "Llaves", l1: "Objeto", l2: "Abrir", l3: "Se pierden" },
+    { solution: "Gafas", l1: "Objeto", l2: "Ver", l3: "Cristales" },
+    { solution: "Paraguas", l1: "Objeto", l2: "Lluvia", l3: "Olvidado" },
+    { solution: "Zapatillas", l1: "Objeto", l2: "Calzado", l3: "Cómodas" },
+    { solution: "Mochila", l1: "Objeto", l2: "Espalda", l3: "Cremallera" },
+    { solution: "Botella", l1: "Objeto", l2: "Agua", l3: "Tapón" },
+    { solution: "Taza", l1: "Objeto", l2: "Beber", l3: "Asa" },
+    { solution: "Cuchara", l1: "Objeto", l2: "Comer", l3: "Metal" },
+    { solution: "Plato", l1: "Objeto", l2: "Comida", l3: "Redondo" },
+    // ===== EXTRA VIDA REAL (20) =====
+    { solution: "Lavadora", l1: "Electrodoméstico", l2: "Ropa", l3: "Girar" },
+    { solution: "Congelador", l1: "Electrodoméstico", l2: "Hielo", l3: "Muy frío" },
+    { solution: "Escoba", l1: "Objeto", l2: "Limpiar", l3: "Suelo" },
+    { solution: "Fregona", l1: "Objeto", l2: "Agua", l3: "Limpieza" },
+    { solution: "Tendedero", l1: "Objeto", l2: "Ropa", l3: "Secar" },
+
+    { solution: "Panadería", l1: "Lugar", l2: "Pan", l3: "Olor" },
+    { solution: "Farmacia", l1: "Lugar", l2: "Medicinas", l3: "Cruz verde" },
+    { solution: "Gasolinera", l1: "Lugar", l2: "Coche", l3: "Repostar" },
+    { solution: "Biblioteca", l1: "Lugar", l2: "Libros", l3: "Silencio" },
+    { solution: "Gimnasio", l1: "Lugar", l2: "Pesas", l3: "Sudor" },
+
+    { solution: "Camarero", l1: "Persona", l2: "Bar", l3: "Pedidos" },
+    { solution: "Profesor", l1: "Persona", l2: "Clase", l3: "Explicar" },
+    { solution: "Repartidor", l1: "Persona", l2: "Paquetes", l3: "Entrega" },
+    { solution: "Vecina", l1: "Persona", l2: "Edificio", l3: "Cerca" },
+
+    { solution: "Hamburguesa", l1: "Comida", l2: "Carne", l3: "Pan" },
+    { solution: "Pizza", l1: "Comida", l2: "Horno", l3: "Porciones" },
+
+    { solution: "Canario", l1: "Animal", l2: "Pájaro", l3: "Canta" },
+    { solution: "Pez", l1: "Animal", l2: "Agua", l3: "Aletas" },
+
+    { solution: "Maceta", l1: "Objeto", l2: "Planta", l3: "Tierra" },
+    // ===== PERSONAJES CONOCIDOS (10) =====
+    { solution: "Trump", l1: "Política", l2: "Estados Unidos", l3: "Presidente" },
+    { solution: "Sánchez", l1: "Política", l2: "España", l3: "Presidente" },
+    { solution: "Messi", l1: "Deporte", l2: "Fútbol", l3: "Balón" },
+    { solution: "Ronaldo", l1: "Deporte", l2: "Fútbol", l3: "Goles" },
+    { solution: "Ibai", l1: "Internet", l2: "Streamer", l3: "Directos" },
+    { solution: "Rosalía", l1: "Música", l2: "España", l3: "Cantante" },
+    { solution: "Elon", l1: "Tecnología", l2: "Empresas", l3: "Espacio" },
+    { solution: "Shakira", l1: "Música", l2: "Colombia", l3: "Bailar" },
+    { solution: "Piqué", l1: "Deporte", l2: "Fútbol", l3: "Defensa" }
 ];
