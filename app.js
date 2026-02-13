@@ -13,6 +13,15 @@ const state = {
   selectedHint: null, // placeholder (JSON al final)
 };
 
+const impostorProbabilities = {
+  3: [[0, 25], [1, 65], [2, 10]],
+  4: [[0, 20], [1, 45], [2, 25], [3, 10]],
+  5: [[0, 20], [1, 30], [2, 25], [3, 15], [4, 10]],
+  6: [[0, 15], [1, 20], [2, 35], [3, 15], [4, 10], [5, 5]],
+  7: [[0, 10], [1, 15], [2, 25], [3, 25], [4, 12.5], [5, 7.5], [6, 5]],
+};
+const impostorProbabilities8to10 = [[0, 2.5], [1, 5], [2, 45], [3, 45], [4, 2.5]];
+
 /* =========================
    DOM
 ========================= */
@@ -95,6 +104,31 @@ function clampImpostors(){
 
   // Disable manual input when auto is enabled
   el.impostorCount.disabled = !!state.autoImpostors;
+}
+
+/**
+ * Selects a value based on a weighted probability table.
+ * Ensures the selected value is not greater than or equal to a given maximum.
+ * @param {Array<[number, number]>} table - An array of [value, weight] pairs.
+ * @param {number} maxAllowed - The maximum allowed value (exclusive).
+ * @returns {number} The selected value.
+ */
+function getWeightedRandom(table, maxAllowed) {
+  const validTable = table.filter(([value]) => value < maxAllowed);
+  if (validTable.length === 0) return 0;
+
+  const totalWeight = validTable.reduce((sum, [, weight]) => sum + weight, 0);
+  let random = Math.random() * totalWeight;
+
+  for (const [value, weight] of validTable) {
+    if (random < weight) {
+      return value;
+    }
+    random -= weight;
+  }
+
+  // Fallback, should not happen if table is correct
+  return validTable[validTable.length - 1][0];
 }
 
 /* =========================
@@ -233,11 +267,34 @@ function startDeal(){
   const err = validateConfig();
   if (err) { showError(err); return; }
 
-  // Auto-pick number of impostors (0..N-1)
+  // Auto-pick number of impostors based on new weighted rules
   if (state.autoImpostors) {
     const n = state.players.length;
-    const max = Math.max(0, n - 1);
-    state.impostorCount = Math.floor(Math.random() * (max + 1));
+    let impostorCount;
+    const table = impostorProbabilities[n] || (n >= 8 && n <= 10 ? impostorProbabilities8to10 : null);
+
+    if (table) {
+      impostorCount = getWeightedRandom(table, n);
+      const totalWeight = table.reduce((sum, [, weight]) => sum + weight, 0);
+      const probText = table
+        .filter(([value]) => value < n)
+        .map(([val, weight]) => `${val} impostor(es) (${((weight / totalWeight) * 100).toFixed(1)}%)`)
+        .join(', ');
+      console.log(`[Impostor] Probabilidades para ${n} jugadores: ${probText}`);
+
+    } else if (n > 10) {
+      const base = Math.floor(n / 4);
+      const variation = Math.floor(Math.random() * 3) - 1; // -1, 0, or 1
+      impostorCount = base + variation;
+      console.log(`[Impostor] Para ${n} jugadores, se usa la fórmula: floor(N/4) ± 1. Base: ${base}, Variación: ${variation}`);
+
+    } else { // n <= 2
+      impostorCount = 0;
+    }
+
+    // Final validation to ensure the number is always valid (0 <= count < n)
+    state.impostorCount = Math.max(0, Math.min(impostorCount, n - 1));
+
     // reflect in UI
     clampImpostors();
   }
@@ -247,7 +304,7 @@ function startDeal(){
 
   // Choose the secret word (always), and optionally reveal a hint to impostors
   state.selectedHint = HINTS[Math.floor(Math.random() * HINTS.length)];
-  console.log("[Impostor] impostores:", state.impostorCount, "de", state.players.length);
+  console.log("[Impostor] Número de impostores:", state.impostorCount);
 
   state.dealIndex = 0;
   updateDealUI();
