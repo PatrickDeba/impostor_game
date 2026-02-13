@@ -120,15 +120,12 @@ const HINTS = [
     { solution: "Surf", l1: "Mar", l2: "Tabla", l3: "Olas" },
 
     // ===== FAMOSOS (10) =====
-    { solution: "Messi", l1: "Fútbol", l2: "Argentino", l3: "Balón de oro" },
     { solution: "Cristiano Ronaldo", l1: "Fútbol", l2: "Portugués", l3: "Goles" },
     { solution: "Ibai", l1: "Streamer", l2: "Eventos", l3: "Twitch" },
     { solution: "Bad Bunny", l1: "Cantante", l2: "Reguetón", l3: "Puerto Rico" },
     { solution: "Aitana", l1: "Cantante", l2: "Pop", l3: "España" },
-    { solution: "Shakira", l1: "Cantante", l2: "Latina", l3: "Baile" },
     { solution: "TheGrefg", l1: "Youtuber", l2: "Gaming", l3: "Directos" },
     { solution: "Karol G", l1: "Música", l2: "Colombia", l3: "Éxitos" },
-    { solution: "Piqué", l1: "Exfutbolista", l2: "Empresa", l3: "Kings League" },
     { solution: "Duki", l1: "Trap", l2: "Argentina", l3: "Conciertos" },
 
     // ===== GIMNASIO (10) =====
@@ -197,8 +194,6 @@ const HINTS = [
     { solution: "Trump", l1: "Política", l2: "Estados Unidos", l3: "Presidente" },
     { solution: "Sánchez", l1: "Política", l2: "España", l3: "Presidente" },
     { solution: "Messi", l1: "Deporte", l2: "Fútbol", l3: "Balón" },
-    { solution: "Ronaldo", l1: "Deporte", l2: "Fútbol", l3: "Goles" },
-    { solution: "Ibai", l1: "Internet", l2: "Streamer", l3: "Directos" },
     { solution: "Rosalía", l1: "Música", l2: "España", l3: "Cantante" },
     { solution: "Elon", l1: "Tecnología", l2: "Empresas", l3: "Espacio" },
     { solution: "Shakira", l1: "Música", l2: "Colombia", l3: "Bailar" },
