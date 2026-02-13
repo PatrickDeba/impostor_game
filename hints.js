@@ -27,7 +27,6 @@ const HINTS = [
     { solution: "Mensaje borracho", l1: "Móvil", l2: "Noche", l3: "Error" },
     { solution: "Ex", l1: "Pasado", l2: "Recuerdos", l3: "Peligro" },
     { solution: "Tontear", l1: "Juego", l2: "Indirectas", l3: "Risas" },
-    { solution: "Baile pegado", l1: "Música", l2: "Cerca", l3: "Discoteca" },
     { solution: "Calor", l1: "Sensación", l2: "Verano", l3: "Sube" },
     { solution: "Mirador", l1: "Lugar", l2: "Vistas", l3: "Romántico" },
     { solution: "Sudadera", l1: "Ropa", l2: "Grande", l3: "Prestada" },
@@ -106,7 +105,6 @@ const HINTS = [
     { solution: "Mapa", l1: "Ubicación", l2: "Buscar", l3: "Orientarse" },
     { solution: "Silencio", l1: "Ambiente", l2: "Calma", l3: "Raro" },
     { solution: "Reloj", l1: "Tiempo", l2: "Mirar", l3: "Tarde" },
-    { solution: "Esperar respuesta", l1: "Mensaje", l2: "Tiempo", l3: "Incertidumbre" },
     { solution: "Plan cancelado", l1: "Aviso", l2: "Última hora", l3: "Fastidio" },
 
     // ===== DEPORTES (10) =====
